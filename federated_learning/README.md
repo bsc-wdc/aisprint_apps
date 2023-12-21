@@ -25,5 +25,32 @@ This application starts invoking the `main_program` method of the `learning.py` 
 ## Launching the application
 The repository also contains the code necessary to run the application both, locally and on marenostrum.
 ### Local execution
+The local execution script `execution_scripts/launch.sh` deploys 4 independent agents on the local host: COMPSsWorker01 acts as the central institution while COMPSsWorker02, COMPSsWorker03 and COMPSsWorker04 become the entry point for each institution hosting the data.
 
 ### Marenostrum execution
+The script `execution_scripts/enqueue.sh` enqueues a new SLURM job in Marenostrum that will spawn an execution with 4 independent agents  in 4 different nodes: the node with lowest id acts as the central institution while the rest of the nodes will become the entry point for each institution hosting the data. In this case, the datasets are in the shared file system.
+
+## Obtianed results
+The following results have been obtained using the Physionet dataset modified to obtain ECGs of up to 30 seconds and splitting it into 4 different parts (1 for each institution and 1 for testing purposes) using different policies.
+
+### Unbalanced class partitioning
+Partial Results for model from Institution 1 (40 estimators)
+Accuracy of model: 0.5329646958740961
+Partial Results for model from Institution 2 (40 estimators)
+Accuracy of model: 0.8634623564440663
+Partial Results for model from Institution 3 (40 estimators)
+Accuracy of model: 0.8498511271799234
+
+Final Results for global model (120 estimators)
+Accuracy of model: 0.8728200765631646 
+
+### Random Partitioning
+Partial Results for model from Institution 1 (40 estimators)
+Accuracy of model: 0.8728200765631646
+Partial Results for model from Institution 2 (40 estimators)
+Accuracy of model: 0.8719693747341557
+Partial Results for model from Institution 3 (40 estimators)
+Accuracy of model: 0.8817524457677584
+
+Final Results for global model (120 estimators)
+Accuracy of model: 0.8838792003402808 
